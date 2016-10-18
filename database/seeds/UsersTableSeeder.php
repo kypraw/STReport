@@ -19,10 +19,10 @@ class UsersTableSeeder extends Seeder
                 'isAdmin' => 1
             ],
             [
-                'username' => 'merlinda',
-                'email'    => 'merlinda@kemenkeu.go.id',
+                'username' => 'piotun',
+                'email'    => 'piotun@kemenkeu.go.id',
                 'password' => bcrypt('testing'),
-                'isAdmin' => 0
+                'isAdmin' => 1
             ],
         ]);
     }

@@ -20,6 +20,7 @@ class ReportController extends Controller
     }
 
     public function postReport(Request $request){
+        $this->validate($request, Report::$rules);
         $user = $request->user();
         $nomor_st = $request['nomor_st'];
         $daerah = $request['daerah'];
@@ -89,6 +90,7 @@ class ReportController extends Controller
     }
 
     public function postReportEdit($report_unique_code, Request $request){
+        $this->validate($request, Report::$rules);
         $user = $request->user();
         $nomor_st = $request['nomor_st'];
         $daerah = $request['daerah'];
