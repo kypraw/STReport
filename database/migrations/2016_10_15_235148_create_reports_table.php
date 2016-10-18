@@ -16,6 +16,7 @@ class CreateReportsTable extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
+            $table->string('jabatan_now');
             $table->integer('nomor_st');
             $table->string('daerah');
             $table->integer('tahun');
@@ -24,6 +25,8 @@ class CreateReportsTable extends Migration
             $table->string('perihal');
             $table->text('laporan');
             $table->string('unique_code')->unique();
+            $table->string('st_path')->default('');
+            $table->string('laporan_path')->default('');
             $table->timestamps();
         });
     }

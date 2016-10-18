@@ -30,5 +30,5 @@
     @endforeach
     </table>
 
-    {{$reports->links()}}
+    {{$reports->appends(Request::only('cari'))->links()}}
 @endsection

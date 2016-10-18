@@ -75,4 +75,9 @@ Route::group(['middleware' => ['auth', 'isAdmin']], function(){
         'uses' => 'DashboardController@getReport',
         'as' => 'dashboard.view'
     ]);
+
+    Route::get('dashboard/search', [
+        'uses' => 'DashboardController@getDashboardSearch',
+        'as' => 'dashboard.search'
+    ]);
 });

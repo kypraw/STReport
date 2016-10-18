@@ -11,7 +11,7 @@ class ReportController extends Controller
     public function getReport(Request $request){
         $user = $request->user();
 
-        $reports = Report::where('user_id', $user->id)->orderBy('nomor_st', 'desc')->paginate(10);
+        $reports = Report::where('user_id', $user->id)->orderBy('tahun', 'desc')->orderBy('nomor_st', 'desc')->paginate(10);
         return view('report.report', ['reports' => $reports]);
     }
 
@@ -20,6 +20,7 @@ class ReportController extends Controller
     }
 
     public function postReport(Request $request){
+        $user = $request->user();
         $nomor_st = $request['nomor_st'];
         $daerah = $request['daerah'];
         $tahun = explode("/", $request['tanggal_mulai'])[2];
@@ -32,10 +33,25 @@ class ReportController extends Controller
 
         $perihal = $request['perihal'];
         $laporan = $request['laporan'];
-        $user = $request->user();
+        
+        $st_upload = $request->file('st_upload');
+        $laporan_upload = $request->file('laporan_upload');
 
+        $unique_code = $tahun . '_' . $nomor_st . '_' . $user->username;
+        $st_code = $unique_code . '.pdf';
+        $laporan_code = $unique_code . '.pdf';
+
+        if($st_upload){
+            $st_path = $st_upload->storeAs('surat_tugas', $st_code, 'uploads');
+        }
+
+        if($laporan_upload){
+            $laporan_path = $laporan_upload->storeAs('laporan', $laporan_code, 'uploads');
+        }
+        
         $report = New Report();
         $report->user_id = $user->id;
+        $report->jabatan_now = $user->jabatan;
         $report->nomor_st = $nomor_st;
         $report->daerah = $daerah;
         $report->tahun = $tahun;
@@ -43,9 +59,15 @@ class ReportController extends Controller
         $report->tanggal_berakhir = $tanggal_berakhir;
         $report->perihal = $perihal;
         $report->laporan = $laporan;
-        $report->unique_code = $tahun . '_' . $nomor_st . '_' . $user->username;
-        $report->save();
-
+        $report->unique_code = $unique_code;
+        if($st_upload){
+            $report->st_path = $st_path;
+        }
+        if($laporan_upload){
+            $report->laporan_path = $laporan_path;
+        }
+        $report->save();    
+        
         return redirect()->route('report');
     }
 
@@ -80,6 +102,19 @@ class ReportController extends Controller
 
         $perihal = $request['perihal'];
         $laporan = $request['laporan'];
+        $st_upload = $request->file('st_upload');
+        $laporan_upload = $request->file('laporan_upload');
+        
+        $unique_code = $tahun . '_' . $nomor_st . '_' . $user->username;
+        $st_code = $unique_code . '.pdf';
+        $laporan_code = $unique_code . '.pdf';
+        if($st_upload){
+            $st_path = $st_upload->storeAs('surat_tugas', $st_code, 'uploads');    
+        }
+
+        if($laporan_upload){
+            $laporan_path = $laporan_upload->storeAs('laporan', $laporan_code, 'uploads');
+        }
 
         $report = Report::where('unique_code', $report_unique_code)->first();
         
@@ -94,7 +129,13 @@ class ReportController extends Controller
         $report->tanggal_berakhir = $tanggal_berakhir;
         $report->perihal = $perihal;
         $report->laporan = $laporan;
-        $report->unique_code = $tahun . '_' . $nomor_st . '_' . $user->username;
+        $report->unique_code = $unique_code;
+        if($st_upload){
+            $report->st_path = $st_path;
+        }
+        if($laporan_upload){
+            $report->laporan_path = $laporan_path;
+        }
         $report->update();
 
         return redirect()->route('report');

@@ -5,6 +5,7 @@
 
     <table class="table">
         <tr>
+            <th>Tahun</th>
             <th>Nomor ST</th>
             <th>Perihal</th>
             <th>Edit</th>
@@ -13,6 +14,7 @@
     
     @foreach($reports as $report)
         <tr>
+            <td>{{$report->tahun}}</td>
             <td>{{$report->nomor_st}}</td>
             <td>{{$report->perihal}}</td>
             <td><a href="{{route('report.edit', ['report_unique_code' => $report->unique_code])}}"><button class="btn btn-md btn-primary"><span class="glyphicon glyphicon-edit"></span></button></a></td>

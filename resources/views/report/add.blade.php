@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-        <form method="post" action="{{route('report')}}">
+        <form method="post" action="{{route('report')}}" enctype="multipart/form-data">
         <header><h2>Tambah Laporan</h2></header>
         <div class="form-group">
             <label for="nomor_st">Nomor ST</label>
@@ -29,6 +29,15 @@
         <div class="form-group">
             <label for="laporan">Laporan</label>
             <textarea name="laporan" id="laporan" class="form-control" placeholder="Laporan Anda" rows="10" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="st_upload">Upload ST (jika ada) *pdf</label>
+            <input type="file" name="st_upload" id="st_upload">
+        </div>
+
+        <div class="form-group">
+            <label for="laporan_upload">Upload Laporan Formal (jika ada) *pdf</label>
+            <input type="file" name="laporan_upload" id="laporan_upload">
         </div>
         {{csrf_field()}}
         <button class="btn btn-md btn-primary" type="submit">Simpan</button>

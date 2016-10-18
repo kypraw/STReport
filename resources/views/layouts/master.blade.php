@@ -17,4 +17,5 @@
         <script type="text/javascript" src=" {{ URL::to('src/js/bootstrap.js') }} "></script>
         @yield('script')
     </body>
+    @include('includes.footer')
 </html>
