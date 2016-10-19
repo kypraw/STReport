@@ -49,6 +49,11 @@ Route::group(['middleware' => 'auth'], function(){
         'as' => 'report.post'
     ]);
 
+    Route::get('report/view/{report_unique_code}', [
+        'uses' => 'ReportController@getReportView',
+        'as' => 'report.view'
+    ]);
+
     Route::get('report/edit/{report_unique_code}',[
         'uses' => 'ReportController@getReportEdit',
         'as' => 'report.edit'

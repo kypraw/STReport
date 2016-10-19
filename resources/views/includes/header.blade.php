@@ -10,7 +10,7 @@
         <span class="icon-bar"></span>
       </button>
       @endif
-      <a class="navbar-brand">Sistem Pelaporan dan Monitoring Penugasan Pusintek</a>
+      <a class="navbar-brand">Aplikasi Pelaporan Penugasan</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">

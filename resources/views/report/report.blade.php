@@ -7,7 +7,7 @@
         <tr>
             <th>Tanggal Pelaksanaan</th>
             <th>Perihal</th>
-            <th>Edit</th>
+            <th>View</th>
             <th>Delete</th>
         </tr>
     
@@ -28,7 +28,7 @@
                 ?>
             </td>
             <td>{{$report->perihal}}</td>
-            <td><a href="{{route('report.edit', ['report_unique_code' => $report->unique_code])}}"><button class="btn btn-md btn-primary"><span class="glyphicon glyphicon-edit"></span></button></a></td>
+            <td><a href="{{route('report.view', ['report_unique_code' => $report->unique_code])}}"><button class="btn btn-md btn-primary"><span class="glyphicon glyphicon-eye-open"></span></button></a></td>
             <td>
             <form class="delete" action="{{ route('report.delete', ['report_unique_code' => $report->unique_code]) }}" method="post">
                 {{csrf_field()}}

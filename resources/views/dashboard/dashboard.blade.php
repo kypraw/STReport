@@ -2,6 +2,7 @@
 
 @section('content')
     <p>
+    <label for="cari">Cari Berdasarkan Nomor ST/Pegawai/Perihal/Daerah</label>
     <form action="{{route('dashboard.search')}}" method="get">
     <div class="form-group col-md-3">
         <input type="text" name="cari" id="cari" class="form-control" placeholder="Cari" required>
@@ -12,14 +13,19 @@
     </p>
    <table class="table">
         <tr>
+            <th>Nomor</th>
+            <th>Nomor ST</th>
             <th>Tanggal Pelaksanaan</th>
-            <th>Pegawai</th>
+            <th>Pelapor</th>
             <th>Perihal</th>
             <th>Detail</th>
         </tr>
-    
+    <?php $i = ($reports->currentPage() * $perPage) - $perPage ?>
     @foreach($reports as $report)
+        <?php $i++ ?>
         <tr>
+            <td><?php echo($i)?></td>
+            <td>{{$report->nomor_st}}</td>
             <td><?php
                     $tanggal_mulai = Datetime::createFromFormat('Y-m-d', $report->tanggal_mulai);
                     $tanggal_mulai = $tanggal_mulai->format('d/M/Y');

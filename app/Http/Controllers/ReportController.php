@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Report;
 use Datetime;
 
@@ -73,6 +74,25 @@ class ReportController extends Controller
         $report->save();    
         
         return redirect()->route('report');
+    }
+    public function getReportView(Request $request, $report_unique_code){
+        $user = $request->user();
+        $report = DB::table('reports')
+                    ->where('reports.unique_code', $report_unique_code)
+                    ->leftJoin('users', 'reports.user_id', '=', 'users.id')
+                    ->first();
+
+        $tanggal_mulai = Datetime::createFromFormat('Y-m-d', $report->tanggal_mulai);
+        $tanggal_mulai = $tanggal_mulai->format('d/M/Y');
+        
+        $tanggal_berakhir = Datetime::createFromFormat('Y-m-d', $report->tanggal_berakhir);
+        $tanggal_berakhir = $tanggal_berakhir->format('d/M/Y');
+
+        if($user->id !== $report->user_id){
+            return redirect()->route('home');
+        }
+
+        return view('report.view', ['report' => $report, 'tanggal_mulai' => $tanggal_mulai, 'tanggal_berakhir' => $tanggal_berakhir]);
     }
 
     public function getReportEdit(Request $request, $report_unique_code){
