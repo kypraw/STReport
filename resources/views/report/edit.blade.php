@@ -8,26 +8,28 @@
 @section('content')
         <form method="post" action="{{route('report.editpost', ['report_unique_code' => $report->unique_code])}}" enctype="multipart/form-data">
         <header><h2>Edit Laporan</h2></header>
-        <div class="form-group">
+        <div class="form-group col-md-3">
             <label for="nomor_st">Nomor ST</label>
             <input type="text" name="nomor_st" id="nomor_st" class="form-control" value="{{$report->nomor_st}}" required autofocus>
         </div>
-        <div class="form-group">
+        <div class="form-group col-md-3">
             <label for="daerah">Daerah Tujuan</label>
             <input type="text" name="daerah" id="daerah" class="form-control" value="{{$report->daerah}}" required>
         </div>
+        <div class="form-group col-md-12">
         <label for="waktu">Waktu Pelaksanaan</label>
         <div class="input-daterange input-group">
             <input type="text" class="input-sm form-control" name="tanggal_mulai" value="{{$tanggal_mulai}}" />
             <span class="input-group-addon">s.d.</span>
             <input type="text" class="input-sm form-control" name="tanggal_berakhir" value="{{$tanggal_berakhir}}" />
         </div>
-        <div class="form-group">
+        </div>
+        <div class="form-group col-md-12">
             <label for="perihal">Perihal</label>
             <input type="text" name="perihal" id="perihal" class="form-control" value="{{$report->perihal}}" required>
         </div>
-        <div class="form-group">
-            <label for="laporan">Laporan</label>
+        <div class="form-group col-md-12">
+            <label for="laporan">Summary Laporan</label>
             <textarea name="laporan" id="laporan" class="form-control" rows="10" required>{{$report->laporan}}</textarea>
         </div>
         <div class="form-group">

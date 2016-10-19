@@ -158,7 +158,7 @@ return [
                 |
                 */
 
-                'base_dn' => 'ou=kemenkeu,dc=kemenkeu,dc=go,dc=id',
+                'base_dn' => 'ou=Pusat Sistem Informasi dan Teknologi Keuangan,ou=kemenkeu,dc=kemenkeu,dc=go,dc=id',
 
                 /*
                 |--------------------------------------------------------------------------

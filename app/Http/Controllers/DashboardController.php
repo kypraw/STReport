@@ -14,9 +14,8 @@ class DashboardController extends Controller
     public function getDashboard(){
         $reports = DB::table('reports')
                     ->leftJoin('users', 'reports.user_id', '=', 'users.id')
-                    ->orderBy('tahun', 'desc')
-                    ->orderBy('reports.nomor_st', 'desc')
-                    ->select('reports.tahun','reports.unique_code', 'reports.nomor_st' ,'reports.perihal', 'users.longname')
+                    ->orderBy('tanggal_mulai', 'desc')
+                    ->select('reports.tanggal_mulai', 'reports.tanggal_berakhir','reports.unique_code','reports.perihal', 'users.longname')
                     ->paginate(10);
                     
 
@@ -43,7 +42,7 @@ class DashboardController extends Controller
         $cari = '%' . $word . '%';
 
         $reports = DB::select('SELECT * FROM reports LEFT JOIN users ON users.id = reports.user_id
-                                WHERE nomor_st LIKE ? OR longname LIKE ? or perihal LIKE ? ORDER BY tahun DESC, nomor_st DESC', [$cari, $cari, $cari]);
+                                WHERE nomor_st LIKE ? OR longname LIKE ? or perihal LIKE ? OR daerah LIKE ? ORDER BY tanggal_mulai DESC, nomor_st DESC', [$cari, $cari, $cari, $cari]);
         
         $paginate = 10;
         $page = Input::get('page', 1);

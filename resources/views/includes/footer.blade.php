@@ -5,7 +5,7 @@
       <div class="col-md-8">    
       </div>
       <div class="col-md-4">
-        <p class="muted pull-right">© 2016 Pusintek</p>
+        <p class="muted pull-right">© 2016 MLTIK</p>
       </div>
     </div>
   </div>

@@ -11,7 +11,7 @@ class ReportController extends Controller
     public function getReport(Request $request){
         $user = $request->user();
 
-        $reports = Report::where('user_id', $user->id)->orderBy('tahun', 'desc')->orderBy('nomor_st', 'desc')->paginate(10);
+        $reports = Report::where('user_id', $user->id)->orderBy('tahun', 'desc')->orderBy('tanggal_mulai', 'desc')->paginate(10);
         return view('report.report', ['reports' => $reports]);
     }
 
@@ -24,8 +24,11 @@ class ReportController extends Controller
         $user = $request->user();
         $nomor_st = $request['nomor_st'];
         $daerah = $request['daerah'];
-        $tahun = explode("/", $request['tanggal_mulai'])[2];
+        $nomor_st_tahun = explode("/", $request['nomor_st']);
+        $tahun = $nomor_st_tahun[count($nomor_st_tahun) - 1];
         
+        $nomor_st_code = implode('_', $nomor_st_tahun);
+
         $tanggal_mulai = Datetime::createFromFormat('d/m/Y', $request['tanggal_mulai']);
         $tanggal_mulai = $tanggal_mulai->format('Y/m/d');
 
@@ -38,16 +41,16 @@ class ReportController extends Controller
         $st_upload = $request->file('st_upload');
         $laporan_upload = $request->file('laporan_upload');
 
-        $unique_code = $tahun . '_' . $nomor_st . '_' . $user->username;
+        $unique_code = $nomor_st_code . '_' . $user->username;
         $st_code = $unique_code . '.pdf';
         $laporan_code = $unique_code . '.pdf';
 
         if($st_upload){
-            $st_path = $st_upload->storeAs('surat_tugas', $st_code, 'uploads');
+            $st_path = $st_upload->storeAs('surat_tugas/' . $tahun, $st_code, 'uploads');
         }
 
         if($laporan_upload){
-            $laporan_path = $laporan_upload->storeAs('laporan', $laporan_code, 'uploads');
+            $laporan_path = $laporan_upload->storeAs('laporan/'. $tahun, $laporan_code, 'uploads');
         }
         
         $report = New Report();
@@ -94,7 +97,10 @@ class ReportController extends Controller
         $user = $request->user();
         $nomor_st = $request['nomor_st'];
         $daerah = $request['daerah'];
-        $tahun = explode("/", $request['tanggal_mulai'])[2];
+        $nomor_st_tahun = explode("/", $request['nomor_st']);
+        $tahun = $nomor_st_tahun[count($nomor_st_tahun) - 1];
+        
+        $nomor_st_code = implode('_', $nomor_st_tahun);
         
         $tanggal_mulai = Datetime::createFromFormat('d/m/Y', $request['tanggal_mulai']);
         $tanggal_mulai = $tanggal_mulai->format('Y/m/d');
@@ -107,15 +113,15 @@ class ReportController extends Controller
         $st_upload = $request->file('st_upload');
         $laporan_upload = $request->file('laporan_upload');
         
-        $unique_code = $tahun . '_' . $nomor_st . '_' . $user->username;
+        $unique_code = $nomor_st_code . '_' . $user->username;
         $st_code = $unique_code . '.pdf';
         $laporan_code = $unique_code . '.pdf';
         if($st_upload){
-            $st_path = $st_upload->storeAs('surat_tugas', $st_code, 'uploads');    
+            $st_path = $st_upload->storeAs('surat_tugas/'. $tahun, $st_code, 'uploads');    
         }
 
         if($laporan_upload){
-            $laporan_path = $laporan_upload->storeAs('laporan', $laporan_code, 'uploads');
+            $laporan_path = $laporan_upload->storeAs('laporan/'. $tahun, $laporan_code, 'uploads');
         }
 
         $report = Report::where('unique_code', $report_unique_code)->first();

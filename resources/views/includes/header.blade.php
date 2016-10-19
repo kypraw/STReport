@@ -10,7 +10,7 @@
         <span class="icon-bar"></span>
       </button>
       @endif
-      <a class="navbar-brand">ST Reports</a>
+      <a class="navbar-brand">Sistem Pelaporan dan Monitoring Penugasan Pusintek</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
@@ -18,7 +18,7 @@
             @if(Auth::user()->isAdmin == 1)
               <li><a class="white" href="{{ route('dashboard') }}">Dashboard</a></li>
             @endif
-            <li><a href="{{ route('report') }}">Report</a></li>
+            <li><a href="{{ route('report') }}">Laporan</a></li>
             <li><a href="{{ route('logout') }}">Logout</a></li>
         @endif
       </ul>

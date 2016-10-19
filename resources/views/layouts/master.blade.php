@@ -3,6 +3,7 @@
     <head>
         <title>ST Reports</title>
         <link rel="stylesheet" href="{{ URL::to('src/css/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ URL::to('src/css/app.css') }}">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Libre+Franklin">
         @yield('stylesheet')
         <!--optimize mobile experience-->

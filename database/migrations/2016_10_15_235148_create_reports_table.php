@@ -17,13 +17,13 @@ class CreateReportsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('jabatan_now');
-            $table->integer('nomor_st');
+            $table->string('nomor_st');
             $table->string('daerah');
             $table->integer('tahun');
             $table->date('tanggal_mulai');
             $table->date('tanggal_berakhir');
-            $table->string('perihal');
-            $table->text('laporan');
+            $table->text('perihal');
+            $table->longText('laporan');
             $table->string('unique_code')->unique();
             $table->string('st_path')->default('');
             $table->string('laporan_path')->default('');

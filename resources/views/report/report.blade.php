@@ -5,8 +5,7 @@
 
     <table class="table">
         <tr>
-            <th>Tahun</th>
-            <th>Nomor ST</th>
+            <th>Tanggal Pelaksanaan</th>
             <th>Perihal</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -14,8 +13,20 @@
     
     @foreach($reports as $report)
         <tr>
-            <td>{{$report->tahun}}</td>
-            <td>{{$report->nomor_st}}</td>
+            <td><?php
+                    $tanggal_mulai = Datetime::createFromFormat('Y-m-d', $report->tanggal_mulai);
+                    $tanggal_mulai = $tanggal_mulai->format('d/M/Y');
+        
+                    echo($tanggal_mulai);
+                ?>
+                s.d
+                <?php
+                    $tanggal_berakhir = Datetime::createFromFormat('Y-m-d', $report->tanggal_berakhir);
+                    $tanggal_berakhir = $tanggal_berakhir->format('d/M/Y');
+        
+                    echo($tanggal_berakhir);
+                ?>
+            </td>
             <td>{{$report->perihal}}</td>
             <td><a href="{{route('report.edit', ['report_unique_code' => $report->unique_code])}}"><button class="btn btn-md btn-primary"><span class="glyphicon glyphicon-edit"></span></button></a></td>
             <td>

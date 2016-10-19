@@ -42,6 +42,11 @@ class AuthController extends Controller
                 if($userExist->longname !== $longname || $userExist->jabatan !== $jabatan){
                     $userExist->longname = $longname;
                     $userExist->jabatan = $jabatan;
+                    if(strpos($jabatan, 'Kepala Pusat') !== false || strpos($jabatan, 'Kepala Bidang') !== false || strpos($jabatan, 'Kepala Subbidang') !== false){
+                        $userExist->isAdmin = 1;
+                    } else {
+                        $userExist->isAdmin = 0;
+                    }
                     $userExist->update();
                 }
 
@@ -72,6 +77,9 @@ class AuthController extends Controller
                     $user->longname = $longname;
                     $user->jabatan = $jabatan;
                     $user->email = $email;
+                    if(strpos($jabatan, 'Kepala Pusat') !== false || strpos($jabatan, 'Kepala Bidang') !== false || strpos($jabatan, 'Kepala Subbidang') !== false){
+                        $user->isAdmin = 1;
+                    }
                     $user->password = bcrypt($password) ;
                     $user->save();
                 }

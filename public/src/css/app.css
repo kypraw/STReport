@@ -1,0 +1,21 @@
+nav.navbar{
+    background-color: #1c5c93;
+    line-height: 60px;
+}
+
+.navbar-default .container-fluid{
+    max-width: 90%;
+}
+
+div.form-group{
+    clear: both;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-brand:hover,
+#navbar .navbar-nav > li > a,
+#navbar .navbar-nav > .dropdown > a,
+#navbar .navbar-nav > .dropdown > a:hover,
+#navbar .navbar-nav > .dropdown > a:focus {
+  color: white;
+}
