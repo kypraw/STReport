@@ -10,7 +10,7 @@
         <span class="icon-bar"></span>
       </button>
       @endif
-      <a class="navbar-brand">Aplikasi Pelaporan Penugasan</a>
+      <a class="navbar-brand">Aplikasi Pelaporan Pelaksanaan Tugas</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">

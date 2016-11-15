@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Report;
+use App\Comment;
 use Datetime;
 
 class ReportController extends Controller
@@ -12,7 +13,8 @@ class ReportController extends Controller
     public function getReport(Request $request){
         $user = $request->user();
 
-        $reports = Report::where('user_id', $user->id)->orderBy('tahun', 'desc')->orderBy('tanggal_mulai', 'desc')->paginate(10);
+        $reports = Report::where('user_id', $user->id)
+                    ->orderBy('tahun', 'desc')->orderBy('tanggal_mulai', 'desc')->paginate(10);
         return view('report.report', ['reports' => $reports]);
     }
 
@@ -27,7 +29,11 @@ class ReportController extends Controller
         $daerah = $request['daerah'];
         $nomor_st_tahun = explode("/", $request['nomor_st']);
         $tahun = $nomor_st_tahun[count($nomor_st_tahun) - 1];
-        
+        if(!(is_numeric($tahun))){
+            return redirect()->back();
+        }
+        $urgency = $request['urgency'];
+
         $nomor_st_code = implode('_', $nomor_st_tahun);
 
         $tanggal_mulai = Datetime::createFromFormat('d/m/Y', $request['tanggal_mulai']);
@@ -36,6 +42,7 @@ class ReportController extends Controller
         $tanggal_berakhir = Datetime::createFromFormat('d/m/Y', $request['tanggal_berakhir']);
         $tanggal_berakhir = $tanggal_berakhir->format('Y/m/d');
 
+        $pegawai = $request['pegawai'];
         $perihal = $request['perihal'];
         $laporan = $request['laporan'];
         
@@ -62,6 +69,7 @@ class ReportController extends Controller
         $report->tahun = $tahun;
         $report->tanggal_mulai = $tanggal_mulai;
         $report->tanggal_berakhir = $tanggal_berakhir;
+        $report->pegawai = $pegawai;
         $report->perihal = $perihal;
         $report->laporan = $laporan;
         $report->unique_code = $unique_code;
@@ -71,6 +79,7 @@ class ReportController extends Controller
         if($laporan_upload){
             $report->laporan_path = $laporan_path;
         }
+        $report->urgency = $urgency;
         $report->save();    
         
         return redirect()->route('report');
@@ -92,7 +101,12 @@ class ReportController extends Controller
             return redirect()->route('home');
         }
 
-        return view('report.view', ['report' => $report, 'tanggal_mulai' => $tanggal_mulai, 'tanggal_berakhir' => $tanggal_berakhir]);
+        $comments = DB::table('comments')
+                    ->select('longname', 'comment')
+                    ->where('report_unique_code', $report_unique_code)
+                    ->leftJoin('users', 'comments.user_id', '=', 'users.id')->get();
+
+        return view('report.view', ['report' => $report, 'tanggal_mulai' => $tanggal_mulai, 'tanggal_berakhir' => $tanggal_berakhir, 'comments'=>$comments]);
     }
 
     public function getReportEdit(Request $request, $report_unique_code){
@@ -119,7 +133,11 @@ class ReportController extends Controller
         $daerah = $request['daerah'];
         $nomor_st_tahun = explode("/", $request['nomor_st']);
         $tahun = $nomor_st_tahun[count($nomor_st_tahun) - 1];
-        
+        if(!(is_numeric($tahun))){
+            return redirect()->back();
+        }
+        $urgency = $request['urgency'];
+
         $nomor_st_code = implode('_', $nomor_st_tahun);
         
         $tanggal_mulai = Datetime::createFromFormat('d/m/Y', $request['tanggal_mulai']);
@@ -128,6 +146,7 @@ class ReportController extends Controller
         $tanggal_berakhir = Datetime::createFromFormat('d/m/Y', $request['tanggal_berakhir']);
         $tanggal_berakhir = $tanggal_berakhir->format('Y/m/d');
 
+        $pegawai = $request['pegawai'];
         $perihal = $request['perihal'];
         $laporan = $request['laporan'];
         $st_upload = $request->file('st_upload');
@@ -155,6 +174,8 @@ class ReportController extends Controller
         $report->tahun = $tahun;
         $report->tanggal_mulai = $tanggal_mulai;
         $report->tanggal_berakhir = $tanggal_berakhir;
+        $report->laporan = $laporan;
+        $report->pegawai = $pegawai;
         $report->perihal = $perihal;
         $report->laporan = $laporan;
         $report->unique_code = $unique_code;
@@ -164,6 +185,7 @@ class ReportController extends Controller
         if($laporan_upload){
             $report->laporan_path = $laporan_path;
         }
+        $report->urgency = $urgency;
         $report->update();
 
         return redirect()->route('report');

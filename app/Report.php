@@ -11,9 +11,11 @@ class Report extends Model
         'daerah' => 'required',
         'tanggal_mulai' => 'required | date_format:d/m/Y',
         'tanggal_berakhir' => 'required | date_format:d/m/Y',
+        'pegawai' => 'required',
         'perihal' => 'required',
         'laporan' => 'required',
         'st_upload' => 'mimes:pdf',
-        'laporan_upload' => 'mimes:pdf'
+        'laporan_upload' => 'mimes:pdf',
+        'urgency' => 'required|integer'
     ];
 }

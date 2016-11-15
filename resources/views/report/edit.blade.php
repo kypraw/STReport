@@ -16,13 +16,17 @@
             <label for="daerah">Daerah Tujuan</label>
             <input type="text" name="daerah" id="daerah" class="form-control" value="{{$report->daerah}}" required>
         </div>
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-6">
         <label for="waktu">Waktu Pelaksanaan</label>
         <div class="input-daterange input-group">
             <input type="text" class="input-sm form-control" name="tanggal_mulai" value="{{$tanggal_mulai}}" />
             <span class="input-group-addon">s.d.</span>
             <input type="text" class="input-sm form-control" name="tanggal_berakhir" value="{{$tanggal_berakhir}}" />
         </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="pegawai">Pegawai yang ada dalam ST</label>
+            <textarea name="pegawai" id="pegawai" class="form-control" rows="10" required>{{$report->pegawai}}</textarea>
         </div>
         <div class="form-group col-md-12">
             <label for="perihal">Perihal</label>
@@ -33,11 +37,20 @@
             <textarea name="laporan" id="laporan" class="form-control" rows="10" required>{{$report->laporan}}</textarea>
         </div>
         <div class="form-group">
-            <label for="st_upload">Upload ST (jika ada) *pdf</label>
+            <div>
+                <label for="tindak lanjut">Kebutuhan Tindak Lanjut</label>
+            </div>
+            <?php $urgency = $report->urgency ?>
+            <label class="radio-inline"><input type="radio" name="urgency" value="1" {{$urgency == 1 ? 'checked' : ''}} required>Rendah</label>
+            <label class="radio-inline"><input type="radio" name="urgency" value="2" {{$urgency == 2 ? 'checked' : ''}}>Sedang</label>
+            <label class="radio-inline"><input type="radio" name="urgency" value="3" {{$urgency == 3 ? 'checked' : ''}}>Tinggi</label>
+        </div>
+        <div class="form-group">
+            <label for="st_upload">Upload ST *pdf</label>
             <input type="file" name="st_upload" id="st_upload">
         </div>
         <div class="form-group">
-            <label for="laporan_upload">Upload Laporan Formal (jika ada) *pdf</label>
+            <label for="laporan_upload">Upload Laporan Formal *pdf</label>
             <input type="file" name="laporan_upload" id="laporan_upload">
         </div>
         {{csrf_field()}}
@@ -51,6 +64,10 @@
     <script type="text/javascript" src=" {{ URL::to('src/js/datepicker.min.js') }} "></script>
     <script>
         $(document).ready(function() {
+            $('#pegawai').summernote({
+                height:100
+            });
+            
             $('#laporan').summernote({
                 height:300,
             });

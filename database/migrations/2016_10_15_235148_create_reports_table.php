@@ -22,8 +22,10 @@ class CreateReportsTable extends Migration
             $table->integer('tahun');
             $table->date('tanggal_mulai');
             $table->date('tanggal_berakhir');
+            $table->longText('pegawai');
             $table->text('perihal');
             $table->longText('laporan');
+            $table->integer('urgency');
             $table->string('unique_code')->unique();
             $table->string('st_path')->default('');
             $table->string('laporan_path')->default('');

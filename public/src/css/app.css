@@ -19,3 +19,28 @@ div.form-group{
 #navbar .navbar-nav > .dropdown > a:focus {
   color: white;
 }
+
+table.table tr.urgency-2{
+    background-color: #f7e200;
+}
+
+table.table tr.urgency-3{
+    background-color: #bf0000;
+    color: white;
+}
+
+.submitLink {
+  background-color: transparent;
+  text-decoration: underline;
+  border: none;
+  color: blue;
+  cursor: pointer;
+}
+
+submitLink:focus {
+  outline: none;
+}
+
+p.comment_arahan{
+    margin-bottom: 0px;
+}

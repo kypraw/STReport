@@ -12,7 +12,7 @@
         </tr>
     
     @foreach($reports as $report)
-        <tr>
+        <tr class="urgency-{{$report->urgency}}">
             <td><?php
                     $tanggal_mulai = Datetime::createFromFormat('Y-m-d', $report->tanggal_mulai);
                     $tanggal_mulai = $tanggal_mulai->format('d/M/Y');

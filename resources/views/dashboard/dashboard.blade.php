@@ -1,16 +1,21 @@
 @extends('layouts.master')
 
 @section('content')
-    <p>
-    <label for="cari">Cari Berdasarkan Nomor ST/Pegawai/Perihal/Daerah</label>
+    <label for="cari">Cari Berdasarkan Nomor ST/Pegawai/Perihal/Daerah dan Urgency Tindak Lanjut</label>
     <form action="{{route('dashboard.search')}}" method="get">
     <div class="form-group col-md-3">
-        <input type="text" name="cari" id="cari" class="form-control" placeholder="Cari" required>
+        <select class="form-control" name="urgency" id="urgency">
+            <option value="0">All</option>
+            <option value="1">Rendah</option>
+            <option value="2">Sedang</option>
+            <option value="3">Tinggi</option>
+        </select>
     </div>
-    {{csrf_field()}}
+    <div class="form-group col-md-3">
+        <input type="text" name="cari" id="cari" class="form-control" placeholder="Cari">
+    </div>
     <button class="btn btn-md btn-primary btn-inline" type="submit">Cari</button>
     </form>
-    </p>
    <table class="table">
         <tr>
             <th>Nomor</th>
@@ -23,7 +28,7 @@
     <?php $i = ($reports->currentPage() * $perPage) - $perPage ?>
     @foreach($reports as $report)
         <?php $i++ ?>
-        <tr>
+        <tr class="urgency-{{$report->urgency}}">
             <td><?php echo($i)?></td>
             <td>{{$report->nomor_st}}</td>
             <td><?php

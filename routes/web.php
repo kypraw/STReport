@@ -76,7 +76,7 @@ Route::group(['middleware' => ['auth', 'isAdmin']], function(){
         'as' => 'dashboard'
     ]);
 
-    Route::get('dashboard/view/{report_id}', [
+    Route::get('dashboard/view/{report_unique_code}', [
         'uses' => 'DashboardController@getReport',
         'as' => 'dashboard.view'
     ]);
@@ -84,5 +84,15 @@ Route::group(['middleware' => ['auth', 'isAdmin']], function(){
     Route::get('dashboard/search', [
         'uses' => 'DashboardController@getDashboardSearch',
         'as' => 'dashboard.search'
+    ]);
+
+    Route::post('dashboard/komentar/{report_unique_code}', [
+        'uses' => 'DashboardController@postDashboardComment',
+        'as' => 'dashboard.comment'
+    ]);
+
+    Route::post('dashboard/komentar/delete/{comment_id}', [
+        'uses' => 'DashboardController@postCommentDelete',
+        'as' => 'comment.delete'
     ]);
 });

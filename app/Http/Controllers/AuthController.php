@@ -10,7 +10,7 @@ use App\User;
 
 class AuthController extends Controller
 {
-
+    
     public function getHome(){
         return view('login');
     }
